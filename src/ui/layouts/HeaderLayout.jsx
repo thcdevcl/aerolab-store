@@ -7,11 +7,18 @@ export default ({ headline, background }) => {
   const useStyles = makeStyles(theme => ({
     rootContainer: {
       backgroundImage: `url(${background})`,
-      backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
       height: "33vh",
-      paddingLeft: theme.spacing(16),
-      paddingBottom: theme.spacing(6)
+      [theme.breakpoints.up("md")]: {
+        paddingLeft: theme.spacing(16),
+        paddingBottom: theme.spacing(6)
+      },
+      [theme.breakpoints.down("sm")]: {
+        paddingLeft: theme.spacing(6),
+        paddingBottom: theme.spacing(4),
+        backgroundPosition: "right"
+      }
     },
     headline: {
       color: theme.palette.common.white,
