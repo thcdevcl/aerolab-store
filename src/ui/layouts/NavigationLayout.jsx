@@ -16,7 +16,10 @@ const useStyles = makeStyles(theme => ({
   nav: {
     position: "fixed",
     height: theme.spacing(10),
-    width: "100%"
+    width: "100%",
+    backgroundColor: theme.palette.common.white,
+    zIndex: 1000,
+    boxShadow: theme.shadows[5]
   },
   navContainer: {
     padding: `0px ${theme.spacing(6)}px`,
