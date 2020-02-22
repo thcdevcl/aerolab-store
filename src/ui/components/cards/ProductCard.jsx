@@ -35,7 +35,6 @@ const useStyles = makeStyles(theme => ({
   image: { maxWidth: "100%" },
   name: {
     fontSize: 18,
-    color: theme.palette.grey[800],
     fontWeight: 600,
     color: "#616161"
   },
@@ -70,9 +69,9 @@ export default ({ _id, name, cost, category, img, points }) => {
       >
         {redeemable ? (
           hover ? (
-            <img src={buyWhite} className={classes.buyIcon} />
+            <img src={buyWhite} className={classes.buyIcon} alt="buy-icon" />
           ) : (
-            <img src={buyBlue} className={classes.buyIcon} />
+            <img src={buyBlue} className={classes.buyIcon} alt="buy-icon" />
           )
         ) : (
           !hover && <WarningChip diff={cost - points} />
@@ -127,7 +126,7 @@ export default ({ _id, name, cost, category, img, points }) => {
               >
                 {redeemable
                   ? cost.toLocaleString()
-                  : new Number(cost - points).toLocaleString()}
+                  : (cost - points).toLocaleString()}
                 <img src={coin} alt="coin" className={classes.coin} />
               </Typography>
               <Button
