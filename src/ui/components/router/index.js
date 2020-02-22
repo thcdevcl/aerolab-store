@@ -5,10 +5,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import ScrollToTop from "../utils/ScrollToTop";
 
+import Navigation from "../../layouts/NavigationLayout";
+
 import Home from "../../pages/HomePage";
 
 const useStyles = makeStyles(theme => ({
-  main: {}
+  main: { paddingTop: theme.spacing(10) }
 }));
 
 export default () => {
@@ -18,6 +20,7 @@ export default () => {
       <ScrollToTop>
         <Switch>
           <Route exact path="/">
+            <Navigation />
             <main className={classes.main}>
               <Home />
             </main>
