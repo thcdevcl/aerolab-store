@@ -39,7 +39,8 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 100,
     backgroundColor: "#ededed",
     border: "none",
-    color: "#a3a3a3"
+    color: "#a3a3a3",
+    [theme.breakpoints.down("xs")]: { marginBottom: 8 }
   },
   sortBy: {
     color: "#a3a3a3",
@@ -51,7 +52,8 @@ const useStyles = makeStyles(theme => ({
   viewingProducts: {
     color: "#616161",
     fontSize: 24,
-    marginRight: 8
+    marginRight: 8,
+    [theme.breakpoints.down("xs")]: { fontSize: 16 }
   }
 }));
 
