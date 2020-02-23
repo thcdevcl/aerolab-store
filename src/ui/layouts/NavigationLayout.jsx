@@ -4,7 +4,7 @@ import coin from "../../assets/coin.svg";
 
 import { AppContextConsumer } from "../../App";
 
-import { Grid, Typography } from "@material-ui/core";
+import { Hidden, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -56,9 +56,14 @@ export default () => {
               <img src={logo} alt="aerolab-logo" />
               {me && (
                 <div style={{ display: "inline-flex", alignItems: "center" }}>
-                  <Typography variant="body1" classes={{ body1: classes.name }}>
-                    {me.name}
-                  </Typography>
+                  <Hidden xsDown>
+                    <Typography
+                      variant="body1"
+                      classes={{ body1: classes.name }}
+                    >
+                      {me.name}
+                    </Typography>
+                  </Hidden>
                   <div className={classes.pointsContainer}>
                     <Typography
                       variant="body1"
