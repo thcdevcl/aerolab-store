@@ -11,6 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../utils/Spinner";
 import WarningChip from "../chips/WarningChip";
 
+import Notification from "../utils/Notification";
+
 const useStyles = makeStyles(theme => ({
   buyIcon: {
     position: "absolute",
@@ -49,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let initialState = { loading: false, hover: false };
+const initialState = { loading: false, hover: false };
 
 const ProductContext = createContext(initialState);
 
@@ -67,8 +69,8 @@ const reducer = (state, action) => {
 function ProductContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const redeemProduct = async _id => {
-    console.log(_id);
     dispatch({ type: "toggleLoading" });
+    const productId = { productId: _id };
     await fetch(`${process.env.REACT_APP_AEROLAB_API_BASE}/redeem`, {
       method: "POST",
       headers: {
@@ -76,19 +78,18 @@ function ProductContextProvider(props) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.REACT_APP_AEROLAB_API_KEY}`
       },
-      body: JSON.stringify(`{"productId": "${_id}"}`)
+      body: JSON.stringify(productId)
     })
       .then(result =>
-        result.json().then(message => {
-          console.log(message);
-          dispatch({ type: "toggleLoading" });
+        result.json().then(({ message }) => {
+          Notification({ message });
         })
       )
-      .catch(error => console.log(error));
+      .catch(error => Notification({ error }));
+    dispatch({ type: "toggleLoading" });
   };
-  const value = { state, dispatch, redeemProduct };
   return (
-    <ProductContext.Provider value={value}>
+    <ProductContext.Provider value={{ state, dispatch, redeemProduct }}>
       {props.children}
     </ProductContext.Provider>
   );
@@ -101,7 +102,7 @@ function ProductCard({ _id, name, cost, category, img, points }) {
   const { state, dispatch } = useContext(ProductContext);
   const { hover, loading } = state;
   const toggleHover = () => dispatch({ type: "toggleHover" });
-  const redeemable = points - cost > 0;
+  const redeemable = points - cost >= 0;
   return (
     <ProductContextConsumer>
       {({ redeemProduct }) => {

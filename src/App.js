@@ -1,9 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
-import "./styles.css";
-import { HelmetProvider } from "react-helmet-async";
+import ReactNotification from "react-notifications-component";
 
+import { HelmetProvider } from "react-helmet-async";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./assets/theme";
+
+import "react-notifications-component/dist/theme.css";
+import "./styles.css";
 
 import Spinner from "./ui/components/utils/Spinner";
 
@@ -32,12 +35,15 @@ export default () => {
   const { me, loading } = state;
   if (loading) return <Spinner />;
   return (
-    <HelmetProvider>
-      <MuiThemeProvider theme={theme}>
-        <AppContextProvider value={{ me }}>
-          <Router />
-        </AppContextProvider>
-      </MuiThemeProvider>
-    </HelmetProvider>
+    <>
+      <ReactNotification isMobile={false} />
+      <HelmetProvider>
+        <MuiThemeProvider theme={theme}>
+          <AppContextProvider value={{ me }}>
+            <Router />
+          </AppContextProvider>
+        </MuiThemeProvider>
+      </HelmetProvider>
+    </>
   );
 };
