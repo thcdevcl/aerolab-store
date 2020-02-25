@@ -1,4 +1,6 @@
 import React from "react";
+import Swing from "react-reveal/Swing";
+
 import logo from "../../assets/aerolab-logo.svg";
 import coin from "../../assets/coin.svg";
 
@@ -56,7 +58,9 @@ export default () => {
               justify="space-between"
               alignItems="center"
             >
-              <img src={logo} alt="aerolab-logo" />
+              <Swing>
+                <img src={logo} alt="aerolab-logo" />
+              </Swing>
               {me && (
                 <div style={{ display: "inline-flex", alignItems: "center" }}>
                   <Hidden xsDown>

@@ -1,4 +1,5 @@
 import React from "react";
+import Fade from "react-reveal/Fade";
 
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,14 +28,16 @@ export default ({ headline, background }) => {
   }));
   const classes = useStyles();
   return (
-    <Grid
-      container
-      direction="column-reverse"
-      classes={{ container: classes.rootContainer }}
-    >
-      <Typography variant="h3" classes={{ h3: classes.headline }}>
-        {headline}
-      </Typography>
-    </Grid>
+    <Fade>
+      <Grid
+        container
+        direction="column-reverse"
+        classes={{ container: classes.rootContainer }}
+      >
+        <Typography variant="h3" classes={{ h3: classes.headline }}>
+          {headline}
+        </Typography>
+      </Grid>
+    </Fade>
   );
 };

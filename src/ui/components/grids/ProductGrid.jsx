@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
+import Fade from "react-reveal/Fade";
 
 import { Button, Divider, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -259,5 +260,9 @@ export default () => {
     fetchUser();
   }, []);
   if (loading) return <Spinner />;
-  return <ProductGrid products={products} />;
+  return (
+    <Fade>
+      <ProductGrid products={products} />
+    </Fade>
+  );
 };
