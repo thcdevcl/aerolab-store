@@ -7,6 +7,8 @@ import { AppContextConsumer } from "../../App";
 import { Hidden, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import Spinner from "../components/utils/Spinner";
+
 const useStyles = makeStyles(theme => ({
   name: {
     fontSize: theme.spacing(3),
@@ -44,7 +46,8 @@ export default () => {
   const classes = useStyles();
   return (
     <AppContextConsumer>
-      {({ me }) => {
+      {({ state }) => {
+        const { me } = state;
         return (
           <nav className={classes.nav}>
             <Grid
@@ -65,13 +68,17 @@ export default () => {
                     </Typography>
                   </Hidden>
                   <div className={classes.pointsContainer}>
-                    <Typography
-                      variant="body1"
-                      classes={{ body1: classes.points }}
-                    >
-                      {me.points}
-                      <img src={coin} alt="coin" />
-                    </Typography>
+                    {state.loading ? (
+                      <Spinner size={15} />
+                    ) : (
+                      <Typography
+                        variant="body1"
+                        classes={{ body1: classes.points }}
+                      >
+                        {me.points}
+                        <img src={coin} alt="coin" />
+                      </Typography>
+                    )}
                   </div>
                 </div>
               )}

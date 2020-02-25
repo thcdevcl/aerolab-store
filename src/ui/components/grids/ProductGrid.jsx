@@ -86,7 +86,8 @@ function ProductGrid({ products }) {
     setState(prevState => ({ ...prevState, sortByPrice: order }));
   return (
     <AppContextConsumer>
-      {({ me }) => {
+      {({ state }) => {
+        const { me } = state;
         return (
           <Grid
             container

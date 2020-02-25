@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import classNames from "classnames";
 
 import buyBlue from "../../../assets/buy-blue.svg";
@@ -8,10 +8,12 @@ import coin from "../../../assets/coin.svg";
 import { Card, Button, Divider, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Spinner from "../utils/Spinner";
+import { AppContextConsumer } from "../../../App";
+
 import WarningChip from "../chips/WarningChip";
 
 import Notification from "../utils/Notification";
+import Spinner from "../utils/Spinner";
 
 const useStyles = makeStyles(theme => ({
   buyIcon: {
@@ -20,7 +22,11 @@ const useStyles = makeStyles(theme => ({
     right: 12,
     zIndex: 2
   },
-  cardContainer: { position: "relative", padding: `0px ${theme.spacing(2)}px` },
+  cardContainer: {
+    height: "100%",
+    position: "relative",
+    padding: `0px ${theme.spacing(2)}px`
+  },
   category: {
     fontSize: 16,
     color: "#a3a3a3"
@@ -63,6 +69,8 @@ const reducer = (state, action) => {
     case "toggleLoading": {
       return { ...state, loading: !state.loading };
     }
+    default:
+      return null;
   }
 };
 
@@ -83,6 +91,7 @@ function ProductContextProvider(props) {
       .then(result =>
         result.json().then(({ message }) => {
           Notification({ message });
+          props.updateUser();
         })
       )
       .catch(error => Notification({ error }));
@@ -106,19 +115,6 @@ function ProductCard({ _id, name, cost, category, img, points }) {
   return (
     <ProductContextConsumer>
       {({ redeemProduct }) => {
-        if (loading)
-          return (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              style={{ marginBottom: 15 }}
-            >
-              <Spinner />
-            </Grid>
-          );
         return (
           <Grid item xs={12} sm={6} md={4} lg={3} style={{ marginBottom: 15 }}>
             <Grid
@@ -215,8 +211,15 @@ function ProductCard({ _id, name, cost, category, img, points }) {
                       onClick={event => {
                         redeemable && redeemProduct(_id);
                       }}
+                      disabled={loading}
                     >
-                      {redeemable ? "Redeem now" : "Top up"}
+                      {loading ? (
+                        <Spinner />
+                      ) : redeemable ? (
+                        "Redeem now"
+                      ) : (
+                        "Top up"
+                      )}
                     </Button>
                   </Grid>
                 </div>
@@ -230,7 +233,11 @@ function ProductCard({ _id, name, cost, category, img, points }) {
 }
 
 export default props => (
-  <ProductContextProvider>
-    <ProductCard {...props} />
-  </ProductContextProvider>
+  <AppContextConsumer>
+    {({ updateUser }) => (
+      <ProductContextProvider updateUser={updateUser}>
+        <ProductCard {...props} />
+      </ProductContextProvider>
+    )}
+  </AppContextConsumer>
 );
