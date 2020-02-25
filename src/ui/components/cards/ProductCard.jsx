@@ -204,23 +204,19 @@ function ProductCard({ _id, name, cost, category, img, points }) {
                         : (cost - points).toLocaleString()}
                       <img src={coin} alt="coin" className={classes.coin} />
                     </Typography>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      classes={{ contained: classes.redeemButton }}
-                      onClick={event => {
-                        redeemable && redeemProduct(_id);
-                      }}
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <Spinner />
-                      ) : redeemable ? (
-                        "Redeem now"
-                      ) : (
-                        "Top up"
-                      )}
-                    </Button>
+                    {redeemable && (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        classes={{ contained: classes.redeemButton }}
+                        onClick={event => {
+                          redeemable && redeemProduct(_id);
+                        }}
+                        disabled={loading}
+                      >
+                        {loading ? <Spinner /> : "Redeem now"}
+                      </Button>
+                    )}
                   </Grid>
                 </div>
               )}
