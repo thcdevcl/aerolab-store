@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
+import PropTypes from "prop-types";
+
 import Fade from "react-reveal/Fade";
 
 import { Button, Divider, Grid, Typography } from "@material-ui/core";
@@ -235,6 +237,10 @@ function ProductGrid({ products }) {
     </AppContextConsumer>
   );
 }
+
+ProductGrid.propTypes = {
+  products: PropTypes.array.isRequired
+};
 
 export default () => {
   const [state, setState] = useState({

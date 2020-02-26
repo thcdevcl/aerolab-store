@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import coin from "../../../assets/coin.svg";
 
 import { Typography } from "@material-ui/core";
@@ -19,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   coin: { height: 20, width: 20, marginLeft: 4 }
 }));
 
-export default ({ diff }) => {
+function Chip({ diff }) {
   const classes = useStyles();
   return (
     <Typography variant="body2" classes={{ body2: classes.label }}>
@@ -27,4 +29,10 @@ export default ({ diff }) => {
       <img src={coin} alt="coin" className={classes.coin} />
     </Typography>
   );
+}
+
+Chip.propTypes = {
+  diff: PropTypes.number.isRequired
 };
+
+export default Chip;

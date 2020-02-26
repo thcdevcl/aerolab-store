@@ -1,10 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import Fade from "react-reveal/Fade";
 
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-export default ({ headline, background }) => {
+function HeaderLayout({ headline, background }) {
   const useStyles = makeStyles(theme => ({
     rootContainer: {
       backgroundImage: `url(${background})`,
@@ -40,4 +42,11 @@ export default ({ headline, background }) => {
       </Grid>
     </Fade>
   );
+}
+
+HeaderLayout.propTypes = {
+  headline: PropTypes.string.isRequired,
+  background: PropTypes.string.isRequired
 };
+
+export default HeaderLayout;

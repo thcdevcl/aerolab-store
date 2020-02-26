@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
+import PropTypes from "prop-types";
 import classNames from "classnames";
 
 import buyBlue from "../../../assets/buy-blue.svg";
@@ -227,6 +228,14 @@ function ProductCard({ _id, name, cost, category, img, points }) {
     </ProductContextConsumer>
   );
 }
+
+ProductCard.propTypes = {
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  cost: PropTypes.number.isRequired,
+  img: PropTypes.object.isRequired,
+  points: PropTypes.number
+};
 
 export default props => (
   <AppContextConsumer>
