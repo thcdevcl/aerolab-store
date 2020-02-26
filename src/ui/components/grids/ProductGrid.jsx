@@ -62,12 +62,17 @@ const useStyles = makeStyles(theme => ({
 
 function ProductGrid({ products }) {
   const classes = useStyles();
+
   const [state, setState] = useState({
     active: 0,
     sortByPrice: ""
   });
+
   const { active, sortByPrice } = state;
+
   const productsPerPage = 16;
+
+  // Chunk products into pages
   const productsByPage = Array.from(
     { length: Math.ceil(products.length / productsPerPage) },
     (v, i) => {
@@ -85,8 +90,10 @@ function ProductGrid({ products }) {
       }
     }
   );
+
   const setSort = order =>
     setState(prevState => ({ ...prevState, sortByPrice: order }));
+
   return (
     <AppContextConsumer>
       {({ state }) => {
