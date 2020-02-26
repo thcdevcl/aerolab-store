@@ -12,6 +12,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../components/utils/Spinner";
 
 const useStyles = makeStyles(theme => ({
+  coin: {
+    "&:hover": {
+      cursor: "pointer"
+    }
+  },
   name: {
     fontSize: theme.spacing(3),
     marginRight: theme.spacing(2),
@@ -48,7 +53,7 @@ export default () => {
   const classes = useStyles();
   return (
     <AppContextConsumer>
-      {({ state }) => {
+      {({ state, addPoints }) => {
         const { me } = state;
         return (
           <nav className={classes.nav}>
@@ -80,7 +85,12 @@ export default () => {
                         classes={{ body1: classes.points }}
                       >
                         {me.points}
-                        <img src={coin} alt="coin" />
+                        <img
+                          src={coin}
+                          alt="coin"
+                          onClick={() => addPoints()}
+                          className={classes.coin}
+                        />
                       </Typography>
                     )}
                   </div>

@@ -42,10 +42,29 @@ const fetchUser = async () =>
     .then(result => result.json())
     .catch(error => error);
 
+const topUp = async () =>
+  await fetch(`${process.env.REACT_APP_AEROLAB_API_BASE}/user/points`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.REACT_APP_AEROLAB_API_KEY}`
+    },
+    body: JSON.stringify({ amount: 7500 })
+  })
+    .then(result => result.json())
+    .catch(error => error);
+
 export function AppContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const updateUser = useCallback(async () => {
+    const user = await fetchUser();
+    dispatch({ type: "updateUser", me: user });
+  }, []);
+
+  const addPoints = useCallback(async () => {
+    await topUp();
     const user = await fetchUser();
     dispatch({ type: "updateUser", me: user });
   }, []);
@@ -55,7 +74,7 @@ export function AppContextProvider(props) {
   }, [updateUser]);
 
   return (
-    <AppContext.Provider value={{ state, updateUser }}>
+    <AppContext.Provider value={{ state, updateUser, addPoints }}>
       {props.children}
     </AppContext.Provider>
   );
